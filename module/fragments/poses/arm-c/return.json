@@ -1,0 +1,31 @@
+{
+ "arm": "arm-c",
+ "task": "return",
+ "role": "handle",
+ "joints_deg": [
+  190.828,
+  -50.997,
+  111.425,
+  -60.423,
+  93.729,
+  -90.0
+ ],
+ "flange_mm": [
+  737.0,
+  -249.0,
+  852.0
+ ],
+ "approach": [
+  0.0,
+  -1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "tool": "big",
+ "tool_standoff_mm": 161.0,
+ "belt_index_x_mm": 735.0,
+ "on_belt": true,
+ "derived_from": "assembly:wall:sideY/sideZMin/sideZMax",
+ "layout": "637aeb11468de3dd",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

@@ -1,0 +1,29 @@
+{
+ "arm": "arm-b",
+ "task": "flag_insert.clear",
+ "role": "assemble",
+ "joints_deg": [
+  75.866,
+  -119.818,
+  -123.868,
+  -116.318,
+  -18.034,
+  -90.0
+ ],
+ "flange_mm": [
+  925.0,
+  454.4,
+  880.0
+ ],
+ "approach": [
+  0.0,
+  1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 150.0,
+ "of_task": "flag_insert",
+ "tool": "jaw",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

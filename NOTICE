@@ -1,0 +1,5 @@
+sfhack13-isaac-twin
+
+module/ is derived from erh/viam-isaac-sim (https://github.com/erh/viam-isaac-sim),
+licensed under the Apache License 2.0, and includes code vendored from
+DTCurrie/viam-isaac-sim (src/isaac_module/surface_gripper.py).

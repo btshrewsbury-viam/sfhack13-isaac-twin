@@ -1,0 +1,31 @@
+{
+ "arm": "arm-a",
+ "task": "back_shot",
+ "role": "inspect",
+ "joints_deg": [
+  18.073,
+  -138.677,
+  -52.039,
+  -99.589,
+  43.26,
+  -153.085
+ ],
+ "flange_mm": [
+  255.46,
+  0.0,
+  1071.76
+ ],
+ "approach": [
+  -0.7660444431189781,
+  0.0,
+  0.6427876096865394
+ ],
+ "theta_deg": 0.0,
+ "tool": "fisheye",
+ "tool_standoff_mm": 227.0,
+ "belt_index_x_mm": 735.0,
+ "on_belt": true,
+ "derived_from": "assembly:wall:backX",
+ "layout": "52b5214673cb9c21",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

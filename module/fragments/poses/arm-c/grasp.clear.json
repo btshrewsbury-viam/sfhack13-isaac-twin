@@ -1,0 +1,29 @@
+{
+ "arm": "arm-c",
+ "task": "grasp.clear",
+ "role": "handle",
+ "joints_deg": [
+  192.61,
+  -59.911,
+  134.748,
+  -74.834,
+  95.511,
+  -90.0
+ ],
+ "flange_mm": [
+  737.0,
+  -399.0,
+  852.0
+ ],
+ "approach": [
+  0.0,
+  -1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 150.0,
+ "of_task": "grasp",
+ "tool": "big",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

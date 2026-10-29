@@ -1,0 +1,31 @@
+{
+ "arm": "arm-b",
+ "task": "pin_pick",
+ "role": "assemble",
+ "joints_deg": [
+  4.658,
+  -61.255,
+  -144.602,
+  -64.147,
+  90.0,
+  0.759
+ ],
+ "flange_mm": [
+  470.0,
+  550.0,
+  1064.5
+ ],
+ "approach": [
+  0.0,
+  0.0,
+  1.0
+ ],
+ "theta_deg": 0.0,
+ "tool": "jaw",
+ "tool_standoff_mm": 160.0,
+ "belt_index_x_mm": 320.0,
+ "on_belt": false,
+ "derived_from": "Pin assembly:graspPosition + fixture.FEEDERS",
+ "layout": "637aeb11468de3dd",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

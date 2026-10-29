@@ -1,0 +1,29 @@
+{
+ "arm": "arm-a",
+ "task": "inside.clear",
+ "role": "inspect",
+ "joints_deg": [
+  157.532,
+  5.03,
+  -14.158,
+  9.147,
+  -22.468,
+  -90.0
+ ],
+ "flange_mm": [
+  387.0,
+  0.0,
+  888.0
+ ],
+ "approach": [
+  1.0,
+  0.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 50.0,
+ "of_task": "inside",
+ "tool": "fisheye",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

@@ -1,0 +1,31 @@
+{
+ "arm": "arm-b",
+ "task": "pin_insert",
+ "role": "assemble",
+ "joints_deg": [
+  21.368,
+  -134.29,
+  -138.499,
+  -87.214,
+  -72.532,
+  150.0
+ ],
+ "flange_mm": [
+  556.2,
+  395.5,
+  775.3
+ ],
+ "approach": [
+  0.0,
+  1.0,
+  0.0
+ ],
+ "theta_deg": -120.0,
+ "tool": "jaw",
+ "tool_standoff_mm": 160.0,
+ "belt_index_x_mm": 320.0,
+ "on_belt": true,
+ "derived_from": "Pin assembly:seatedPosition/insertAxis",
+ "layout": "637aeb11468de3dd",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

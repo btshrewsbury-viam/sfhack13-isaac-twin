@@ -1,0 +1,31 @@
+{
+ "arm": "arm-b",
+ "task": "flag_pick",
+ "role": "assemble",
+ "joints_deg": [
+  56.419,
+  -99.071,
+  -158.154,
+  -12.779,
+  90.0,
+  -67.482
+ ],
+ "flange_mm": [
+  720.0,
+  540.0,
+  900.1
+ ],
+ "approach": [
+  0.0,
+  0.0,
+  1.0
+ ],
+ "theta_deg": -120.0,
+ "tool": "jaw",
+ "tool_standoff_mm": 160.0,
+ "belt_index_x_mm": 735.0,
+ "on_belt": false,
+ "derived_from": "Flag assembly:graspPosition + fixture.FEEDERS",
+ "layout": "637aeb11468de3dd",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

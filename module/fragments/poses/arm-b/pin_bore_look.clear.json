@@ -1,0 +1,29 @@
+{
+ "arm": "arm-b",
+ "task": "pin_bore_look.clear",
+ "role": "assemble",
+ "joints_deg": [
+  41.649,
+  -74.608,
+  -154.817,
+  -155.293,
+  -54.879,
+  -75.167
+ ],
+ "flange_mm": [
+  556.2,
+  545.24,
+  949.73
+ ],
+ "approach": [
+  -0.0,
+  0.9396926207859084,
+  0.34202014332566877
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 110.0,
+ "of_task": "pin_bore_look",
+ "tool": "realsense",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

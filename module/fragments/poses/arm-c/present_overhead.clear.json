@@ -1,0 +1,29 @@
+{
+ "arm": "arm-c",
+ "task": "present_overhead.clear",
+ "role": "handle",
+ "joints_deg": [
+  59.262,
+  -143.874,
+  -131.004,
+  94.875,
+  37.839,
+  90.0
+ ],
+ "flange_mm": [
+  737.0,
+  -405.0,
+  922.0
+ ],
+ "approach": [
+  0.0,
+  -1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 150.0,
+ "of_task": "present_overhead",
+ "tool": "big",
+ "layout": "dc5e79b51712daa3",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

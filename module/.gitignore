@@ -1,0 +1,17 @@
+.VIAM_RELOAD_ARCHIVE.tar.gz
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+*~
+module.tar.gz
+dist/
+
+# local scratch: machine secrets, run logs
+.scratch/
+
+# measured off the usd assets and keyed on their size+mtime, so it is machine-local and
+# regenerates in about a second - see probes/assembly/colliders.py
+probes/assembly/collider_cache.json

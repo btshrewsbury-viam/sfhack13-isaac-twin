@@ -1,0 +1,31 @@
+{
+ "arm": "arm-b",
+ "task": "flag_insert",
+ "role": "assemble",
+ "joints_deg": [
+  58.359,
+  -128.254,
+  -105.571,
+  -126.181,
+  -35.542,
+  -90.0
+ ],
+ "flange_mm": [
+  925.0,
+  304.4,
+  880.0
+ ],
+ "approach": [
+  0.0,
+  1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "tool": "jaw",
+ "tool_standoff_mm": 160.0,
+ "belt_index_x_mm": 735.0,
+ "on_belt": true,
+ "derived_from": "Flag assembly:seatedPosition/insertAxis",
+ "layout": "637aeb11468de3dd",
+ "_note": "Taught by probes/assembly/reach_check.py. `layout` fingerprints the fragment and the asset frames this was taught against; a loader that sees a different one must refuse rather than drive here."
+}

@@ -1,0 +1,632 @@
+{
+  "components": [
+    {
+      "api": "rdk:component:generic",
+      "attributes": {
+        "headless": true,
+        "livestream": false,
+        "props": [
+          {
+            "color": [
+              0.55,
+              0.55,
+              0.58
+            ],
+            "fixed": true,
+            "name": "laptops",
+            "position": [
+              0.45,
+              -0.28,
+              0.4385
+            ],
+            "scale": [
+              0.9,
+              0.2,
+              1.323
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.55,
+              0.55,
+              0.58
+            ],
+            "fixed": true,
+            "name": "water_bottle",
+            "position": [
+              1,
+              0.12,
+              0.4385
+            ],
+            "scale": [
+              0.2,
+              1,
+              1.323
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.55,
+              0.55,
+              0.58
+            ],
+            "fixed": true,
+            "name": "walkway",
+            "position": [
+              0.45,
+              0.52,
+              0.4385
+            ],
+            "scale": [
+              0.9,
+              0.2,
+              1.323
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.55,
+              0.55,
+              0.58
+            ],
+            "fixed": true,
+            "name": "fixture_cube_1",
+            "position": [
+              0.643,
+              0.193,
+              0.025
+            ],
+            "scale": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.55,
+              0.55,
+              0.58
+            ],
+            "fixed": true,
+            "name": "fixture_cube_2",
+            "position": [
+              0.723,
+              0.195,
+              0.025
+            ],
+            "scale": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.9,
+              0.15,
+              0.1
+            ],
+            "fixed": false,
+            "name": "pick_block",
+            "position": [
+              0.395,
+              0.175,
+              0.0175
+            ],
+            "scale": [
+              0.035,
+              0.035,
+              0.035
+            ],
+            "size": 1,
+            "type": "cube"
+          },
+          {
+            "color": [
+              0.1,
+              0.35,
+              0.9
+            ],
+            "fixed": false,
+            "name": "pick_tile",
+            "position": [
+              0.395,
+              0.262,
+              0.005
+            ],
+            "scale": [
+              0.04,
+              0.04,
+              0.01
+            ],
+            "size": 1,
+            "type": "cube"
+          }
+        ]
+      },
+      "model": "hackathons:isaac-sim:world",
+      "name": "sim-world"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometry": {
+          "length_mm": 175,
+          "radius_mm": 45
+        },
+        "jaw": {
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "closed_mm": 0,
+          "fingers": {
+            "left_finger": [
+              0,
+              1,
+              0
+            ],
+            "right_finger": [
+              0,
+              -1,
+              0
+            ]
+          },
+          "mount_mm": 0,
+          "open_mm": 86,
+          "rest_open_mm": 86,
+          "stroke_mm": 43,
+          "units_per_mm": 0.001,
+          "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Robots/Ufactory/xarm_gripper/xarm_gripper.usd"
+        },
+        "max_grip_distance": 0.03,
+        "offset": [
+          0.158,
+          0,
+          0
+        ],
+        "parent_prim": "/World/arm/link6",
+        "parent_tool_axis": "z",
+        "world": "sim-world",
+        "visual": false
+      },
+      "frame": {
+        "geometry": {
+          "translation": {
+            "x": 0,
+            "y": 0,
+            "z": -30
+          },
+          "type": "box",
+          "x": 75,
+          "y": 120,
+          "z": 160
+        },
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "arm",
+        "translation": {
+          "x": 0,
+          "y": 0,
+          "z": 105
+        }
+      },
+      "model": "hackathons:isaac-sim:gripper",
+      "name": "gripper"
+    },
+    {
+      "api": "rdk:component:camera",
+      "attributes": {
+        "depth": true,
+        "fov_deg": 69,
+        "height": 720,
+        "local_orientation_rpy_deg": [
+          178.2626,
+          -0.2358,
+          88.9127
+        ],
+        "local_position": [
+          0.083,
+          -0.014,
+          0.018
+        ],
+        "parent_prim": "/World/arm/link6",
+        "pcd_stride": 2,
+        "width": 1280,
+        "world": "sim-world"
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": -97.731173,
+            "x": -0.030391,
+            "y": -0.003538,
+            "z": 0.999532
+          }
+        },
+        "parent": "arm",
+        "translation": {
+          "x": 83,
+          "y": -14,
+          "z": 18
+        }
+      },
+      "model": "hackathons:isaac-sim:camera",
+      "name": "cam"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "laptops",
+            "type": "box",
+            "x": 900,
+            "y": 200,
+            "z": 1323
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 450,
+          "y": -280,
+          "z": 438.5
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "laptops"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "water-bottle",
+            "type": "box",
+            "x": 200,
+            "y": 1000,
+            "z": 1323
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 1000,
+          "y": 120,
+          "z": 438.5
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "water-bottle"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "walkway",
+            "type": "box",
+            "x": 900,
+            "y": 200,
+            "z": 1323
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 450,
+          "y": 520,
+          "z": 438.5
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "walkway"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "fixture-cube-1",
+            "type": "box",
+            "x": 50,
+            "y": 50,
+            "z": 50
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 643,
+          "y": 193,
+          "z": 25
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "fixture-cube-1"
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "fixture-cube-2",
+            "type": "box",
+            "x": 50,
+            "y": 50,
+            "z": 50
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 723,
+          "y": 195,
+          "z": 25
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "fixture-cube-2"
+    },
+    {
+      "api": "rdk:component:camera",
+      "attributes": {
+        "max": {
+          "X": 480,
+          "Y": 240,
+          "Z": 40
+        },
+        "min": {
+          "X": 310,
+          "Y": 140,
+          "Z": 15
+        },
+        "src": "cam"
+      },
+      "model": "erh:vmodutils:pc-crop-camera",
+      "name": "pick-bar-crop"
+    },
+    {
+      "api": "rdk:component:camera",
+      "attributes": {
+        "max": {
+          "X": 460,
+          "Y": 280,
+          "Z": 12
+        },
+        "min": {
+          "X": 330,
+          "Y": 228,
+          "Z": 2
+        },
+        "src": "cam"
+      },
+      "model": "erh:vmodutils:pc-crop-camera",
+      "name": "pick-table-crop"
+    },
+    {
+      "api": "rdk:component:arm",
+      "attributes": {
+        "asset": "uf850",
+        "drive_damping": 2000,
+        "drive_max_effort": 1000,
+        "drive_stiffness": 200000,
+        "end_effector_prim": "/World/arm/link6",
+        "joint_accel_deg_s2": 200,
+        "joint_speed_deg_s": 60,
+        "world": "sim-world"
+      },
+      "frame": {
+        "parent": "world"
+      },
+      "model": "hackathons:isaac-sim:arm",
+      "name": "arm"
+    },
+    {
+      "name": "overview-cam",
+      "api": "rdk:component:camera",
+      "model": "hackathons:isaac-sim:camera",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": -350,
+          "y": 120,
+          "z": 1300
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "target": [
+          0.45,
+          0.12,
+          0.0
+        ],
+        "width": 1280,
+        "height": 720,
+        "fov_deg": 80.0
+      }
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "table",
+            "type": "box",
+            "x": 3000,
+            "y": 3000,
+            "z": 200
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 0,
+          "y": 0,
+          "z": -100
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "table",
+      "ui_folder": {
+        "name": "obstacles"
+      }
+    },
+    {
+      "api": "rdk:component:gripper",
+      "attributes": {
+        "geometries": [
+          {
+            "label": "ceiling",
+            "type": "box",
+            "x": 3000,
+            "y": 3000,
+            "z": 100
+          }
+        ]
+      },
+      "frame": {
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "th": 0,
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        "parent": "world",
+        "translation": {
+          "x": 0,
+          "y": 0,
+          "z": 1050
+        }
+      },
+      "model": "erh:vmodutils:obstacle",
+      "name": "ceiling",
+      "ui_folder": {
+        "name": "obstacles"
+      }
+    }
+  ],
+  "modules": [
+    {
+      "type": "registry",
+      "name": "isaac-sim",
+      "module_id": "hackathons:isaac-sim",
+      "version": "latest",
+      "first_run_timeout": "2h0m0s"
+    },
+    {
+      "module_id": "erh:vmodutils",
+      "name": "erh_vmodutils",
+      "type": "registry",
+      "version": "latest"
+    }
+  ],
+  "services": [
+    {
+      "api": "rdk:service:vision",
+      "attributes": {
+        "camera": "pick-bar-crop",
+        "max-distance": 10,
+        "min-points-per-cluster": 200,
+        "min-points-per-segment": 5
+      },
+      "model": "erh:vmodutils:pc-cluster",
+      "name": "pick-bar-finder"
+    },
+    {
+      "api": "rdk:service:vision",
+      "attributes": {
+        "camera": "pick-table-crop",
+        "max-distance": 10,
+        "min-points-per-cluster": 200,
+        "min-points-per-segment": 5
+      },
+      "model": "erh:vmodutils:pc-cluster",
+      "name": "pick-table-finder"
+    }
+  ]
+}

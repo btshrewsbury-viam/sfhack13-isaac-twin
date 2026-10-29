@@ -1,0 +1,150 @@
+{
+  "_comment": [
+    "Measured from the mailbox asset in a running scene by",
+    "probes/derive_mailbox.py. Do not edit: re-run the probe.",
+    "tests/test_mailbox_asset.py re-measures and fails on drift."
+  ],
+  "usd_path": "/home/shrews/viam/usd/mailbox/mailbox.usda",
+  "dims_mm": [
+    172.2,
+    494.9,
+    226.9
+  ],
+  "origin_to_centre_mm": [
+    2.4,
+    -10.8,
+    106.3
+  ],
+  "origin_to_bottom_mm": -7.2,
+  "grip_drop_mm": 8.5,
+  "decal_faces": {
+    "smudge": "+x",
+    "drip": "+x",
+    "overspray": "+z"
+  },
+  "decal_dims_mm": {
+    "smudge": [
+      0.1,
+      56.7,
+      46.2
+    ],
+    "drip": [
+      0.1,
+      47.4,
+      61.8
+    ],
+    "overspray": [
+      94.2,
+      130.8,
+      23.4
+    ]
+  },
+  "grip_patch": {
+    "standoff_mm": 251.5,
+    "along_axis": "x",
+    "offset_mm": -2.3,
+    "window_mm": [
+      -86.4,
+      81.9
+    ],
+    "clear_mm": 168.3,
+    "blocked_mm": [],
+    "height_mm": [
+      -119.4,
+      122.7
+    ]
+  },
+  "grip_faces": {
+    "+x": {
+      "standoff_mm": 81.9,
+      "along_axis": "y",
+      "offset_mm": -162.1,
+      "window_mm": [
+        -229.1,
+        -95.2
+      ],
+      "clear_mm": 134.0,
+      "blocked_mm": [
+        [
+          -95.2,
+          159.0
+        ]
+      ],
+      "height_mm": [
+        -119.4,
+        122.7
+      ]
+    },
+    "-x": {
+      "standoff_mm": 86.4,
+      "along_axis": "y",
+      "offset_mm": 11.2,
+      "window_mm": [
+        -229.1,
+        251.5
+      ],
+      "clear_mm": 480.6,
+      "blocked_mm": [],
+      "height_mm": [
+        -119.4,
+        122.7
+      ]
+    },
+    "+y": {
+      "standoff_mm": 251.5,
+      "along_axis": "x",
+      "offset_mm": -2.3,
+      "window_mm": [
+        -86.4,
+        81.9
+      ],
+      "clear_mm": 168.3,
+      "blocked_mm": [],
+      "height_mm": [
+        -119.4,
+        122.7
+      ]
+    },
+    "-y": {
+      "standoff_mm": 229.1,
+      "along_axis": "x",
+      "offset_mm": -2.3,
+      "window_mm": [
+        -86.4,
+        81.9
+      ],
+      "clear_mm": 168.3,
+      "blocked_mm": [],
+      "height_mm": [
+        -119.4,
+        122.7
+      ]
+    }
+  },
+  "variant_sets": {
+    "model": "A_classic_rural",
+    "door_condition": "ok",
+    "paint_defect": "none",
+    "scheme": "classic_black"
+  },
+  "ground_truth": {
+    "mailbox:expectedDoorPass": true,
+    "mailbox:serial": "MBX-000000",
+    "mailbox:schemeId": 0.0,
+    "mailbox:collisionBoundsMax": [
+      0.2581999897956848,
+      0.0885000005364418,
+      0.21969999372959137
+    ],
+    "mailbox:doorCondition": "ok",
+    "mailbox:paintDefect": "none",
+    "mailbox:expectedPaintPass": true,
+    "mailbox:scheme": "classic_black",
+    "mailbox:collisionBoundsMin": [
+      -0.23669999837875366,
+      -0.08370000123977661,
+      -0.007199999876320362
+    ]
+  },
+  "_offsets_from": "the asset's collision_bounds.json, rotated by yaw_deg - arithmetic, not a measurement of a part that may have moved"
+}

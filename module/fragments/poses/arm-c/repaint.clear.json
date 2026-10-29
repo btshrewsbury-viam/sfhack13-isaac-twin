@@ -1,0 +1,29 @@
+{
+ "arm": "arm-c",
+ "task": "repaint.clear",
+ "role": "handle",
+ "joints_deg": [
+  12.611,
+  -37.867,
+  130.769,
+  -92.898,
+  95.511,
+  -90.0
+ ],
+ "flange_mm": [
+  1063.0,
+  -1201.0,
+  732.0
+ ],
+ "approach": [
+  0.0,
+  1.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 150.0,
+ "of_task": "repaint",
+ "tool": "big",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

@@ -1,0 +1,1064 @@
+{
+  "_comment": [
+    "Viam 103 bimanual QC cell. Two ur5e arms inspect a stamped mailbox: arm-a picks it",
+    "off the infeed belt by a flat side, presents the five faces its cup is not covering",
+    "to inspect-cam, and sets it down on the handoff stand YAWED HALF A TURN; arm-b takes",
+    "it from there, presents the remaining face, and places it in the good or bad tray",
+    "according to the verdict the checks reach.",
+    "",
+    "The half turn is the whole design. The belt leaves only the +y approach at the pick,",
+    "so arm-a's cup covers the part's +y face and the first check can never see it. Turned",
+    "half a turn on the stand, that face swings round to arm-b's side: each arm works",
+    "entirely on its own side of the cell, and arm-b ends up holding the opposite face of",
+    "the part, which is what gives the second check something to do.",
+    "",
+    "Geometry started as the isaac-arcade layout scaled by 0.76 and is no longer only that:",
+    "the trays and the camera have since been placed by hand against measured constraints,",
+    "so rescaling would not move them correctly. What holds the layout together now is",
+    "tests/test_cell_layout.py, which derives every station from THIS file and asserts the",
+    "constraints - not the scale sweep.",
+    "",
+    "Those constraints, in the order they bit:",
+    " - every station inside the arm's reach with ~10% margin, asserted at the flange and",
+    "   at the APPROACH above it, which is higher and therefore further;",
+    " - a reach bound of 1016.7 mm measured from the motion service, NOT the 850 mm on the",
+    "   datasheet, which is to the wrist centre;",
+    " - but a spherical bound is honest about position and silent about ORIENTATION: a tray",
+    "   at 837 mm produced zero IK solutions because the tool could not point back along -y",
+    "   from that far past the base. The trays therefore sit side by side in x at one y, so",
+    "   both places use a configuration the cell has demonstrated;",
+    " - arm-a cannot reach either tray holding the +y side, which is what makes the handoff",
+    "   mandatory. Holding the other side it COULD reach the good tray - so it is the belt,",
+    "   not the reach, that forces the handoff;",
+    " - placing in one tray must not put arm-b's wrist inside the other. They used to sit",
+    "   23 mm apart and it did.",
+    "",
+    "inspect-cam's fov_deg is NOT decoration - it defaults to 70 deg, and this cell sets",
+    "50. Both arms present 1020 mm from the lens, where 50 deg horizontal frames 951 mm:",
+    "1.35 px/mm at 1280 wide, which puts the narrowest defect mark - the 12 mm drip - at",
+    "16 px across and 62 long. At the 70 deg default the same frame is 1428 mm wide, 0.90",
+    "px/mm, and the 8 mm scratch is 7 px. Both arms are at 1020 mm because the camera aims",
+    "at the MIDPOINT of the two presentation points rather than at the centreline, so the",
+    "two checks frame the part alike and one threshold serves both.",
+    "",
+    "clipping_range_m is also not decoration, and its absence cost a day: usd's default",
+    "near plane is 1.0 world unit - a metre - and the part is presented 780 mm away, so",
+    "every frame rendered the part and the nearby arm links as pure black silhouettes while",
+    "the wall behind came out fine. It reads as a lighting fault and is not one.",
+    "",
+    "The part carries its defects as children named defect_*, switched by visibility at",
+    "runtime so a round is repeatable with no respawn. They spawn with collision: false,",
+    "because usd visibility is a render attribute and physx keeps the collider either way -",
+    "an invisible decal with a collider would sit in the other arm's approach and the",
+    "suction raycast would hit it. Structural children DO collide. At least one defect must",
+    "stay on the +y panel or the second check can never change a verdict.",
+    "",
+    "drive_damping_ratio on the arms is load-bearing. The ur5e asset's authored gains are",
+    "stiffness ~5e5 against damping [21.7, 23.6, 234.5, 90.4, 3.5, 0.2] - about four orders",
+    "short of critical, and 0.2 on the wrist roll. Those drives ring rather than settle, and",
+    "a joint still ringing when a tolerance is checked is indistinguishable from one held by",
+    "a collision. Every 'the wrist stalls short' in this project's notes was that.",
+    "",
+    "Each arm's isaac 'position' and its viam 'frame.translation' describe the same point",
+    "in two units (m and mm), and the test keeps them consistent so the file reads",
+    "honestly. Note they cannot actually disagree at runtime: apply_frame_to_attrs()",
+    "overwrites 'position' from the frame, so the frame wins and 'position' is inert",
+    "whenever a frame is present. The placement risk that IS real is rotational - whether",
+    "the SVA's base frame and the Isaac USD's root share a yaw - and no config test can",
+    "see it. Phase 1 settles it by commanding all-zero joints and comparing Isaac's",
+    "end-effector world pose against motion.GetPose.",
+    "",
+    "end_effector_prim is what GetEndPosition reports; without it the call raises. The",
+    "flange prim is also the one the yaw check compares against motion.GetPose.",
+    "",
+    "The 180 deg base yaw on each arm is load-bearing. A ur5e's zero configuration",
+    "points its flange at about -164 deg in its own base frame, and every station in this",
+    "cell is at +x, so unrotated the stations all need a pan within ~30 deg of the +-180",
+    "wrap point. RDK seeds IK from the current configuration and scores by joint-space",
+    "distance, so a workspace straddling the wrap ratchets: each move takes the nearest",
+    "representative and the choice sticks. Facing the arms at the cell puts the stations",
+    "near pan 0 and the discontinuity behind the arm, where nothing works.",
+    "",
+    "joint_limit_deg is load-bearing, not tuning. The ur5e SVA allows every revolute",
+    "joint +-360 deg and the planner picks any solution in that range, so the cell winds",
+    "itself up: measured over one pass of the stations a joint went from -26 to 206 deg,",
+    "and after two passes an arm sat at 270. Near 360 it jams. 180 covers every",
+    "orientation, and the solutions these stations need peak at 174 deg.",
+    "",
+    "shoulder_lift gets an explicit range because a symmetric limit puts the wrap point",
+    "on every joint in the same place, and this joint's working range - about [-174, 4]",
+    "- straddles 180. Bounded symmetrically it simply ratcheted there instead, sitting",
+    "pinned at 180 over a long run. [-270, 90] still spans one turn, so there is exactly",
+    "one solution per pose, but both ends are somewhere the arm never goes.",
+    "",
+    "The belt is derived from CONVEYOR_CENTER/CONVEYOR_SIZE, not eyeballed: it runs along",
+    "y (0.258 x 0.836), which an earlier draft had transposed to run along x and centred",
+    "on the pick slot instead of the belt. The trays are placed against the constraints above and tested; moving one needs test_cell_layout to stay green.",
+    "",
+    "None of this scenery exists in the frame system - props are spawned in Isaac only, so",
+    "the planner cannot see the belt or the trays. qc:cell has to pass them as world_state",
+    "obstacles on every move, or the arms will plan straight through them."
+  ],
+  "modules": [
+    {
+      "type": "local",
+      "name": "isaac-sim",
+      "executable_path": "/home/shrews/viam/viam-isaac-sim/run.sh"
+    }
+  ],
+  "components": [
+    {
+      "name": "sim-world",
+      "namespace": "rdk",
+      "type": "generic",
+      "model": "erh:isaac-sim:world",
+      "attributes": {
+        "headless": true,
+        "livestream": true,
+        "props": [
+          {
+            "name": "part",
+            "type": "usd",
+            "usd_path": "/home/shrews/viam/usd/mailbox/mailbox.usda",
+            "position": [
+              0.8,
+              -1.8,
+              0.7765
+            ],
+            "scale": 1.0,
+            "body_prim": "Body",
+            "variants": {
+              "model": "A_classic_rural",
+              "scheme": "classic_black",
+              "paint_defect": "none",
+              "door_condition": "ok"
+            },
+            "yaw_deg": -90.0,
+            "articulation_root": false,
+            "bounds_m": {
+              "min": [
+                -0.0838,
+                -0.2582,
+                -0.0072
+              ],
+              "max": [
+                0.0886,
+                0.2367,
+                0.2197
+              ]
+            }
+          },
+          {
+            "name": "pedestal_a",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              0.0,
+              -0.38,
+              0.31
+            ],
+            "size": 1.0,
+            "scale": [
+              0.22,
+              0.22,
+              0.62
+            ],
+            "color": [
+              0.17,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "name": "pedestal_b",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              0.0,
+              0.38,
+              0.31
+            ],
+            "size": 1.0,
+            "scale": [
+              0.22,
+              0.22,
+              0.62
+            ],
+            "color": [
+              0.17,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "name": "guard_back",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.45,
+              -0.2,
+              0.55
+            ],
+            "size": 1.0,
+            "scale": [
+              0.04,
+              3.2,
+              1.1
+            ],
+            "color": [
+              0.18,
+              0.34,
+              0.38
+            ]
+          },
+          {
+            "name": "cabinet",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.2,
+              1.3,
+              0.55
+            ],
+            "size": 1.0,
+            "scale": [
+              0.36,
+              0.5,
+              1.1
+            ],
+            "color": [
+              0.62,
+              0.62,
+              0.58
+            ]
+          },
+          {
+            "name": "cabinet_face",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.01,
+              1.3,
+              0.8
+            ],
+            "size": 1.0,
+            "scale": [
+              0.02,
+              0.36,
+              0.3
+            ],
+            "color": [
+              0.08,
+              0.1,
+              0.12
+            ]
+          },
+          {
+            "name": "bay_stripe_x",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              0.55,
+              -1.35,
+              0.002
+            ],
+            "size": 1.0,
+            "scale": [
+              2.7,
+              0.1,
+              0.004
+            ],
+            "color": [
+              0.75,
+              0.62,
+              0.1
+            ]
+          },
+          {
+            "name": "bay_stripe_y",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              1.75,
+              -0.2,
+              0.002
+            ],
+            "size": 1.0,
+            "scale": [
+              0.1,
+              2.4,
+              0.004
+            ],
+            "color": [
+              0.75,
+              0.62,
+              0.1
+            ]
+          },
+          {
+            "name": "guard_post_0",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.45,
+              -1.6,
+              0.6
+            ],
+            "size": 1.0,
+            "scale": [
+              0.07,
+              0.07,
+              1.2
+            ],
+            "color": [
+              0.12,
+              0.13,
+              0.15
+            ]
+          },
+          {
+            "name": "guard_post_1",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.45,
+              -0.6,
+              0.6
+            ],
+            "size": 1.0,
+            "scale": [
+              0.07,
+              0.07,
+              1.2
+            ],
+            "color": [
+              0.12,
+              0.13,
+              0.15
+            ]
+          },
+          {
+            "name": "guard_post_2",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.45,
+              0.4,
+              0.6
+            ],
+            "size": 1.0,
+            "scale": [
+              0.07,
+              0.07,
+              1.2
+            ],
+            "color": [
+              0.12,
+              0.13,
+              0.15
+            ]
+          },
+          {
+            "name": "guard_post_3",
+            "type": "cube",
+            "fixed": true,
+            "position": [
+              -1.45,
+              1.4,
+              0.6
+            ],
+            "size": 1.0,
+            "scale": [
+              0.07,
+              0.07,
+              1.2
+            ],
+            "color": [
+              0.12,
+              0.13,
+              0.15
+            ]
+          },
+          {
+            "name": "belt",
+            "type": "usd",
+            "usd_path": "/home/shrews/viam/usd/conveyor/ConveyorBelt_A06.usd",
+            "position": [
+              0.8,
+              -0.25,
+              -1.0112
+            ],
+            "yaw_deg": -90.0,
+            "fixed": true,
+            "articulation_root": false,
+            "bounds_m": [
+              {
+                "name": "deck",
+                "min": [
+                  -0.45,
+                  -1.9994,
+                  1.7415
+                ],
+                "max": [
+                  0.45,
+                  -0.0,
+                  1.7805
+                ]
+              },
+              {
+                "name": "wall_l",
+                "min": [
+                  -0.5755,
+                  -2.0,
+                  1.6005
+                ],
+                "max": [
+                  -0.4518,
+                  -0.0,
+                  1.8005
+                ]
+              },
+              {
+                "name": "wall_r",
+                "min": [
+                  0.4518,
+                  -2.0,
+                  1.6005
+                ],
+                "max": [
+                  0.5755,
+                  -0.0,
+                  1.8005
+                ]
+              },
+              {
+                "name": "leg_l",
+                "min": [
+                  -0.563,
+                  -1.9368,
+                  0.0
+                ],
+                "max": [
+                  -0.518,
+                  -1.8618,
+                  2.3109
+                ]
+              },
+              {
+                "name": "leg_r",
+                "min": [
+                  0.518,
+                  -1.9368,
+                  0.0
+                ],
+                "max": [
+                  0.563,
+                  -1.8618,
+                  2.3109
+                ]
+              }
+            ],
+            "conveyor": {
+              "driven": "Belt",
+              "speed_mm_s": 300.0,
+              "beam": {
+                "y_mm": -311.0,
+                "from_x_mm": 360.0,
+                "span_mm": 880.0,
+                "z_mm": 830.0,
+                "stops": true
+              },
+              "mode": "belt",
+              "axis": [
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          {
+            "name": "fixture",
+            "type": "cube",
+            "fixed": true,
+            "size": 1.0,
+            "scale": [
+              0.25,
+              0.5,
+              0.08
+            ],
+            "position": [
+              0.78,
+              0.0,
+              0.56
+            ],
+            "color": [
+              0.4,
+              0.42,
+              0.45
+            ]
+          },
+          {
+            "name": "fixture_wall_x",
+            "type": "cube",
+            "fixed": true,
+            "size": 1.0,
+            "scale": [
+              0.02,
+              0.5,
+              0.02
+            ],
+            "position": [
+              0.9112,
+              0.0,
+              0.61
+            ],
+            "color": [
+              0.75,
+              0.62,
+              0.1
+            ]
+          },
+          {
+            "name": "fixture_wall_y",
+            "type": "cube",
+            "fixed": true,
+            "size": 1.0,
+            "scale": [
+              0.25,
+              0.02,
+              0.06
+            ],
+            "position": [
+              0.78,
+              -0.26244999999999996,
+              0.63
+            ],
+            "color": [
+              0.75,
+              0.62,
+              0.1
+            ]
+          },
+          {
+            "name": "good_conveyor",
+            "type": "usd",
+            "usd_path": "/home/shrews/viam/usd/conveyor/ConveyorBelt_A06.usd",
+            "position": [
+              0.6,
+              0.33,
+              -1.4505
+            ],
+            "fixed": true,
+            "bounds_m": [
+              {
+                "name": "deck",
+                "min": [
+                  0.0,
+                  -0.1575,
+                  1.7415
+                ],
+                "max": [
+                  1.9994,
+                  0.1575,
+                  1.7805
+                ]
+              },
+              {
+                "name": "wall_l",
+                "min": [
+                  0.0,
+                  -0.2014,
+                  1.6005
+                ],
+                "max": [
+                  2.0,
+                  -0.1581,
+                  1.8005
+                ]
+              },
+              {
+                "name": "wall_r",
+                "min": [
+                  0.0,
+                  0.1581,
+                  1.6005
+                ],
+                "max": [
+                  2.0,
+                  0.2014,
+                  1.8005
+                ]
+              },
+              {
+                "name": "leg_l",
+                "min": [
+                  1.8618,
+                  -0.197,
+                  0.0
+                ],
+                "max": [
+                  1.9368,
+                  -0.1813,
+                  2.3109
+                ]
+              },
+              {
+                "name": "leg_r",
+                "min": [
+                  1.8618,
+                  0.1813,
+                  0.0
+                ],
+                "max": [
+                  1.9368,
+                  0.197,
+                  2.3109
+                ]
+              }
+            ],
+            "scale": [
+              1.0,
+              0.35,
+              1.0
+            ],
+            "conveyor": {
+              "driven": "Belt",
+              "speed_mm_s": 400.0,
+              "axis": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "mode": "belt"
+            }
+          },
+          {
+            "name": "good_conveyor_stand",
+            "type": "cube",
+            "fixed": true,
+            "size": 1.0,
+            "scale": [
+              0.78,
+              0.16,
+              0.324
+            ],
+            "position": [
+              1.26,
+              0.33,
+              0.162
+            ],
+            "color": [
+              0.19,
+              0.2,
+              0.22
+            ]
+          },
+          {
+            "name": "bad_conveyor",
+            "type": "usd",
+            "usd_path": "/home/shrews/viam/usd/conveyor/ConveyorBelt_A06.usd",
+            "position": [
+              0.6,
+              0.69,
+              -1.4505
+            ],
+            "fixed": true,
+            "bounds_m": [
+              {
+                "name": "deck",
+                "min": [
+                  0.0,
+                  -0.1575,
+                  1.7415
+                ],
+                "max": [
+                  1.9994,
+                  0.1575,
+                  1.7805
+                ]
+              },
+              {
+                "name": "wall_l",
+                "min": [
+                  0.0,
+                  -0.2014,
+                  1.6005
+                ],
+                "max": [
+                  2.0,
+                  -0.1581,
+                  1.8005
+                ]
+              },
+              {
+                "name": "wall_r",
+                "min": [
+                  0.0,
+                  0.1581,
+                  1.6005
+                ],
+                "max": [
+                  2.0,
+                  0.2014,
+                  1.8005
+                ]
+              },
+              {
+                "name": "leg_l",
+                "min": [
+                  1.8618,
+                  -0.197,
+                  0.0
+                ],
+                "max": [
+                  1.9368,
+                  -0.1813,
+                  2.3109
+                ]
+              },
+              {
+                "name": "leg_r",
+                "min": [
+                  1.8618,
+                  0.1813,
+                  0.0
+                ],
+                "max": [
+                  1.9368,
+                  0.197,
+                  2.3109
+                ]
+              }
+            ],
+            "scale": [
+              1.0,
+              0.35,
+              1.0
+            ],
+            "conveyor": {
+              "driven": "Belt",
+              "speed_mm_s": 400.0,
+              "axis": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "mode": "belt"
+            }
+          },
+          {
+            "name": "bad_conveyor_stand",
+            "type": "cube",
+            "fixed": true,
+            "size": 1.0,
+            "scale": [
+              0.78,
+              0.16,
+              0.324
+            ],
+            "position": [
+              1.26,
+              0.69,
+              0.162
+            ],
+            "color": [
+              0.19,
+              0.2,
+              0.22
+            ]
+          }
+        ],
+        "ground": {
+          "kind": "plane",
+          "size": 40.0,
+          "color": [
+            0.27,
+            0.27,
+            0.29
+          ],
+          "friction": 0.6,
+          "matte": false
+        },
+        "render": {
+          "viewport_grid": false
+        },
+        "lighting": {
+          "dome": {
+            "intensity": 520,
+            "color": [
+              0.92,
+              0.95,
+              1.0
+            ]
+          },
+          "sphere_intensity": 75000
+        },
+        "cycle": {
+          "_comment": [
+            "What this cell would be expected to achieve on a real line, and what each part",
+            "of the budget is. Stated here rather than in the probe so the target and the",
+            "cell are described in one place.",
+            "The speeds are deliberately under a UR5e's rating - it is quoted at 1 m/s at the",
+            "tool - because a cell carrying a 2.5 kg part on a single suction cup is not run",
+            "at its rating. The dwells are the part of this budget that is an ESTIMATE and",
+            "not a measurement: a real figure for the cup wants the EPick manual's response",
+            "times, and the camera dwell wants the exposure and the inference the course",
+            "actually uses."
+          ],
+          "tcp_speed_mm_s": 600.0,
+          "tcp_accel_mm_s2": 1500.0,
+          "reorient_s": 0.9,
+          "camera_dwell_s": 0.35,
+          "grip_s": 0.25,
+          "release_s": 0.2
+        }
+      }
+    },
+    {
+      "name": "arm-a",
+      "namespace": "rdk",
+      "type": "arm",
+      "model": "erh:isaac-sim:arm",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": 0,
+          "y": -380,
+          "z": 620.0
+        },
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "th": 180
+          }
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "asset": "ur5e",
+        "joint_limit_deg": 180,
+        "joint_limits_deg": {
+          "shoulder_lift_joint": [
+            -270,
+            90
+          ],
+          "wrist_2_joint": [
+            -270,
+            270
+          ],
+          "wrist_3_joint": [
+            -190,
+            190
+          ],
+          "shoulder_pan_joint": [
+            -200.0,
+            180.0
+          ]
+        },
+        "position": [
+          0.0,
+          -0.38,
+          0.62
+        ],
+        "end_effector_prim": "/World/arm_a/wrist_3_link/flange",
+        "home_joints_deg": [
+          -153.5,
+          -86.2,
+          -97.4,
+          -146.2,
+          -153.5,
+          -90.0
+        ],
+        "drive_max_effort": 1000.0,
+        "drive_stiffness": 200000.0,
+        "drive_damping": 2000.0,
+        "joint_speed_deg_s": 40.0,
+        "joint_accel_deg_s2": 120.0
+      }
+    },
+    {
+      "name": "arm-b",
+      "namespace": "rdk",
+      "type": "arm",
+      "model": "erh:isaac-sim:arm",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": 0,
+          "y": 380,
+          "z": 620.0
+        },
+        "orientation": {
+          "type": "ov_degrees",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "th": 180
+          }
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "asset": "ur5e",
+        "joint_limit_deg": 180,
+        "joint_limits_deg": {
+          "shoulder_lift_joint": [
+            -270,
+            90
+          ],
+          "wrist_2_joint": [
+            -270,
+            270
+          ],
+          "wrist_3_joint": [
+            -190,
+            190
+          ]
+        },
+        "position": [
+          0.0,
+          0.38,
+          0.62
+        ],
+        "end_effector_prim": "/World/arm_b/wrist_3_link/flange",
+        "home_joints_deg": [
+          -168.0,
+          -113.7,
+          -79.2,
+          42.9,
+          78.0,
+          89.9
+        ],
+        "drive_max_effort": 1000.0,
+        "drive_stiffness": 200000.0,
+        "drive_damping": 2000.0,
+        "joint_speed_deg_s": 40.0,
+        "joint_accel_deg_s2": 120.0
+      }
+    },
+    {
+      "name": "inspect-cam",
+      "namespace": "rdk",
+      "type": "camera",
+      "model": "erh:isaac-sim:camera",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": 1600,
+          "y": 27.5,
+          "z": 905.0
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "target": [
+          0.6,
+          0.0275,
+          0.905
+        ],
+        "fov_deg": 70.0,
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "suction-a",
+      "namespace": "rdk",
+      "type": "gripper",
+      "model": "erh:isaac-sim:gripper",
+      "attributes": {
+        "world": "sim-world",
+        "parent_prim": "/World/arm_a/wrist_3_link/flange",
+        "offset": [
+          0.12,
+          0.0,
+          0.0
+        ],
+        "max_grip_distance": 0.02,
+        "geometry": {
+          "radius_mm": 25,
+          "length_mm": 120
+        }
+      }
+    },
+    {
+      "name": "suction-b",
+      "namespace": "rdk",
+      "type": "gripper",
+      "model": "erh:isaac-sim:gripper",
+      "attributes": {
+        "world": "sim-world",
+        "parent_prim": "/World/arm_b/wrist_3_link/flange",
+        "offset": [
+          0.12,
+          0.0,
+          0.0
+        ],
+        "max_grip_distance": 0.02,
+        "geometry": {
+          "radius_mm": 25,
+          "length_mm": 120
+        }
+      }
+    },
+    {
+      "name": "overview-cam",
+      "namespace": "rdk",
+      "type": "camera",
+      "model": "erh:isaac-sim:camera",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": 2500,
+          "y": -2300,
+          "z": 1800
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "target": [
+          0.6,
+          -0.1,
+          0.6
+        ],
+        "fov_deg": 50.0,
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "door-cam",
+      "namespace": "rdk",
+      "type": "camera",
+      "model": "erh:isaac-sim:camera",
+      "frame": {
+        "parent": "world",
+        "translation": {
+          "x": 2500,
+          "y": -2300,
+          "z": 1800
+        }
+      },
+      "attributes": {
+        "world": "sim-world",
+        "position": [
+          1.25,
+          -0.95,
+          0.95
+        ],
+        "target": [
+          0.52,
+          -0.24,
+          0.7
+        ],
+        "fov_deg": 42.0,
+        "width": 1280,
+        "height": 720
+      }
+    }
+  ]
+}

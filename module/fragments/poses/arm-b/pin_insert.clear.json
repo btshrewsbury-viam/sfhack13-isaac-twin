@@ -1,0 +1,29 @@
+{
+ "arm": "arm-b",
+ "task": "pin_insert.clear",
+ "role": "assemble",
+ "joints_deg": [
+  33.094,
+  -143.154,
+  -156.044,
+  -60.804,
+  -60.807,
+  150.0
+ ],
+ "flange_mm": [
+  556.2,
+  505.5,
+  775.3
+ ],
+ "approach": [
+  0.0,
+  1.0,
+  0.0
+ ],
+ "theta_deg": -120.0,
+ "clear_mm": 110.0,
+ "of_task": "pin_insert",
+ "tool": "jaw",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

@@ -1,0 +1,29 @@
+{
+ "arm": "arm-a",
+ "task": "park",
+ "role": "park",
+ "joints_deg": [
+  157.532,
+  -21.036,
+  -9.15,
+  30.222,
+  -22.468,
+  -90.0
+ ],
+ "flange_mm": [
+  358.33,
+  -69.33,
+  1212.76
+ ],
+ "approach": [
+  1.0,
+  0.0,
+  0.0
+ ],
+ "theta_deg": 0.0,
+ "layout": "637aeb11468de3dd",
+ "wait_of": "inside",
+ "back_mm": 75,
+ "lift_mm": 325,
+ "_note": "Where this arm waits: its first station's stand-off pulled back and lifted out of the belt's sweep on the same wrist branch (waits.py)."
+}

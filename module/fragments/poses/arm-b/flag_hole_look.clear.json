@@ -1,0 +1,29 @@
+{
+ "arm": "arm-b",
+ "task": "flag_hole_look.clear",
+ "role": "assemble",
+ "joints_deg": [
+  114.744,
+  -113.818,
+  -137.539,
+  -108.647,
+  20.843,
+  -90.0
+ ],
+ "flange_mm": [
+  925.0,
+  681.5,
+  880.0
+ ],
+ "approach": [
+  -0.0,
+  1.0,
+  -0.0
+ ],
+ "theta_deg": 0.0,
+ "clear_mm": 150.0,
+ "of_task": "flag_hole_look",
+ "tool": "realsense",
+ "layout": "637aeb11468de3dd",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

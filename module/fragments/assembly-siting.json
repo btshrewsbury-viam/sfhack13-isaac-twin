@@ -1,0 +1,57 @@
+{
+ "_how": "chosen by probes/assembly/site.py, sweeping 15498 arrangements",
+ "_worst_margin": -100.0,
+ "_note": "every station that rides the belt clears with +46 to +242; the two that do not are the door feeder (pan 38) and the repaint drop (pan 40), both fixed points and neither an insertion",
+ "belt_top_mm": 650.0,
+ "belt_width_mm": 420.0,
+ "belt_from_x_mm": -499.0,
+ "belt_to_x_mm": 1500.0,
+ "arm_base_z_mm": 800.0,
+ "arm_bases_mm": {
+  "arm-a": [
+   300.0,
+   -800.0,
+   800.0
+  ],
+  "arm-b": [
+   600.0,
+   800.0,
+   800.0
+  ],
+  "arm-c": [
+   900.0,
+   -800.0,
+   800.0
+  ]
+ },
+ "arm_yaw_deg": {
+  "arm-a": 90.0,
+  "arm-b": -93.9,
+  "arm-c": 82.9
+ },
+ "arm_roles": {
+  "arm-a": "inspect",
+  "arm-b": "assemble",
+  "arm-c": "handle"
+ },
+ "rack_mm": [
+  99.3,
+  434.4,
+  830.0
+ ],
+ "repaint_mm": [
+  1065.0,
+  -1600.0,
+  810.0
+ ],
+ "belt_index_x_mm": {
+  "tunnel": -1000.0,
+  "inside": -55.0,
+  "flag": 735.0,
+  "door": 152.3,
+  "pin": 320.0,
+  "back": 735.0,
+  "handle": 735.0
+ },
+ "fixture_lift_mm": 120.0
+}

@@ -1,0 +1,29 @@
+{
+ "arm": "arm-c",
+ "task": "present_side.clear",
+ "role": "handle",
+ "joints_deg": [
+  33.313,
+  -157.687,
+  -90.322,
+  -21.997,
+  -90.0,
+  -116.213
+ ],
+ "flange_mm": [
+  737.0,
+  -167.15,
+  859.85
+ ],
+ "approach": [
+  0.0,
+  0.0,
+  -1.0
+ ],
+ "theta_deg": 90.0,
+ "clear_mm": 150.0,
+ "of_task": "present_side",
+ "tool": "big",
+ "layout": "dc5e79b51712daa3",
+ "_note": "Where the tool stands off this station. Taught on the way IN, so the station inherits this configuration; enter and leave by it."
+}

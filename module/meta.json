@@ -1,0 +1,58 @@
+{
+  "module_id": "hackathons:isaac-sim",
+  "visibility": "public",
+  "url": "https://github.com/btshrewsbury-viam/sfhack13-isaac-twin",
+  "description": "Isaac Sim through Viam: UFactory 850 + xArm Gripper, depth cameras, UR/Franka arms, suction and finger grippers (fork of erh:isaac-sim)",
+  "models": [
+    {
+      "model": "hackathons:isaac-sim:world",
+      "api": "rdk:component:generic",
+      "short_description": "Boots and manages the Isaac Sim world/stage"
+    },
+    {
+      "model": "hackathons:isaac-sim:arm",
+      "api": "rdk:component:arm",
+      "short_description": "A simulated arm (UR, Franka, or any articulation USD)"
+    },
+    {
+      "model": "hackathons:isaac-sim:camera",
+      "api": "rdk:component:camera",
+      "short_description": "A simulated RGB camera in the Isaac Sim stage"
+    },
+    {
+      "model": "hackathons:isaac-sim:base",
+      "api": "rdk:component:base",
+      "short_description": "A simulated differential-drive base"
+    },
+    {
+      "model": "hackathons:isaac-sim:gripper",
+      "api": "rdk:component:gripper",
+      "short_description": "Suction gripper in Isaac Sim, driven by isaac's surface gripper"
+    },
+    {
+      "model": "hackathons:isaac-sim:cell",
+      "api": "rdk:service:generic",
+      "short_description": "The Viam 103 mailbox cell's learner verbs: batches, routes, inserts, grasps"
+    },
+    {
+      "model": "hackathons:isaac-sim:scoreboard",
+      "api": "rdk:component:sensor",
+      "short_description": "The Viam 103 cell's batch counters and score"
+    },
+    {
+      "model": "hackathons:isaac-sim:oracle",
+      "api": "rdk:service:vision",
+      "short_description": "The Viam 103 cell's oracle vision: answers from the cell's truth"
+    }
+  ],
+  "entrypoint": "dist/run.sh",
+  "first_run": "first_run.sh",
+  "build": {
+    "build": "make module.tar.gz",
+    "setup": "make setup",
+    "path": "module.tar.gz",
+    "arch": [
+      "linux/amd64"
+    ]
+  }
+}
